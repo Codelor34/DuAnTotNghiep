@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 
-namespace Du_An_Tot_Nghiep.Models
+namespace DuAnTotNghiep.Models
 {
     public class KhachHang
 

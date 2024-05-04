@@ -43,8 +43,15 @@ namespace DuAnTotNghiep.Data
         public DbSet<Video> video { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+           
             modelBuilder.Entity<Admin>().HasOne( a => a.User).WithMany().HasForeignKey(a=> a.UserName );
 
+
+
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-ES0LE9K;Initial Catalog=Du_an_tott_nghiep;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
         }
     }
 

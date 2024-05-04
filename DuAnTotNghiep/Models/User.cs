@@ -1,6 +1,6 @@
 ﻿using DuAnTotNghiep.Models;
 
-namespace Du_An_Tot_Nghiep.Models
+namespace DuAnTotNghiep.Models
 {
     public class User
     {      

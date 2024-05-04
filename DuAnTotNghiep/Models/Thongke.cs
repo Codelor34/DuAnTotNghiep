@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Du_An_Tot_Nghiep.Models
+namespace DuAnTotNghiep.Models
 {
     public class Thongke
     {
