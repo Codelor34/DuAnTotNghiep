@@ -11,5 +11,8 @@ namespace DuAnTotNghiep.Models
         public string? Status { get; set; }
         public DateTime NgayTT { get; set; }
         public string? KieuTT { get; set; }
+        public ThanhToan ThanhToan { get; set; }
+        public DonHang DonHang { get; set; }
+        public Don_Hoan_Thanh Don_Hoan_Thanh { get; set; }
     }
 }

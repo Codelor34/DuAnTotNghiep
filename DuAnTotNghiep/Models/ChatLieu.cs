@@ -7,5 +7,6 @@ namespace DuAnTotNghiep.Models
         [Key]
         public Guid ID_ChatLieu { get; set; }
         public string? Chatlieu { get; set; }
+        public virtual ICollection<SanPham> SanPham { get; set; }
     }
 }

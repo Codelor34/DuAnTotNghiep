@@ -11,7 +11,7 @@ namespace DuAnTotNghiep.Data
         {
 
         }
-        public DbSet<User> User { get; set; }
+        public DbSet<Users> Users { get; set; }
         public DbSet<Admin> Admin { get; set; }
         public DbSet<Anh> anh { get; set; }
         public DbSet<AnhSP> anhsp { get; set; }

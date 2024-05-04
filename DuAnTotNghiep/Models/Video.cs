@@ -9,5 +9,6 @@ namespace DuAnTotNghiep.Models
         public Guid ID_Video { get; set; }
         public Guid ID_DanhGia_NhanXet { get; set; }
         public string? video {  get; set; }
+        public  DanhGia_NhanXet DanhGia_NhanXet { get; set; }
     }
 }

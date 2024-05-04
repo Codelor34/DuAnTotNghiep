@@ -13,5 +13,7 @@ namespace DuAnTotNghiep.Models
         public string DiaChi { get; set;}
         public DateTime NgaySinh { get; set;}
         public string HoTenAdmin { get; set;}
+        public Admin Admin { get; set;}
+        public virtual ICollection<User_Khachhang> User_Khachhang { get; set;}
     }
 }

@@ -20,5 +20,19 @@ namespace DuAnTotNghiep.Models
         public Guid ID_LoaiDt { get; set; }
         public Guid ID_MauSac {  get; set; }
         public Guid ID_KichThuoc { get; set; }
+        
+        public Admin Admin { get; set; }
+        public ChatLieu ChatLieu { get; set; }
+        public HangSX HangSX { get; set; }
+        public QuocGia QuocGia { get; set; }   
+        public LoaiSP LoaiSP { get; set; }
+        public LoaiDt LoaiDt { get; set; }
+        public MauSac MauSac { get; set; }
+        public KichThuoc KichThuoc { get; set; }
+        public virtual ICollection<AnhSP> AnhSP {  get; set; }
+        public virtual ICollection<Gio_Hang_Chi_Tiet> Gio_Hang_Chi_Tiet { get; set; }
+        public virtual ICollection<SanPham_Mua> SanPham_Mua { get; set; }
+        public virtual ICollection<DanhGia_NhanXet> DanhGia_NhanXet { get; set; }
+
     }
 }

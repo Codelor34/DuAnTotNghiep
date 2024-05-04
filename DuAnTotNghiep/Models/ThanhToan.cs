@@ -14,6 +14,10 @@ namespace DuAnTotNghiep.Models
         public string? DiaChi {  get; set; }
         public string? SDT { get; set; }
         public string? HoTen {  get; set; }
+        public Gio_Hang_Chi_Tiet Gio_Hang_Chi_Tiet { get; set; }
+        public SanPham_Mua SanPham_Mua { get; set; }
+        public PhuongThucThanhToan PhuongThucThanhToan { get; set; }
+        public virtual ICollection<Don_Hang_Thanh_Toan> Don_Hang_Thanh_Toan { get; set; }
 
     }
 }

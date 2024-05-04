@@ -7,5 +7,6 @@ namespace DuAnTotNghiep.Models
         [Key]
         public Guid ID_PhuongThucThanhToan { get; set; }
         public string? PhuongThuc {  get; set; }
+        public virtual ICollection<ThanhToan> ThanhToan { get; set; }
     }
 }
