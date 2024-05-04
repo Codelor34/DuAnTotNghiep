@@ -43,7 +43,8 @@ namespace DuAnTotNghiep.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
            
-            modelBuilder.Entity<Admin>().HasOne( a => a.User).WithMany().HasForeignKey(a=> a.UserName );
+            modelBuilder.Entity<Admin>().HasOne( a => a.Users).WithMany().HasForeignKey(a=> a.UserName );
+            
 
 
 

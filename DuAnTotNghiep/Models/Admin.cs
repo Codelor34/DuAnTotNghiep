@@ -13,7 +13,7 @@ namespace DuAnTotNghiep.Models
         public string DiaChi { get; set; }
         public DateTime NgaySinh { get; set; }
         public string? UserName { get; set; }
-        public User User { get; set; }
+        public Users Users { get; set; }
         public virtual ICollection<NhanVien> NhanVien { get; set;}
         public virtual ICollection<KhachHang> KhachHang { get; set; }
         public virtual ICollection<KhuyenMai> KhuyenMai { get; set; }
