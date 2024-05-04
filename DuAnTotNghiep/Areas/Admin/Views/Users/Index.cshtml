@@ -1,0 +1,52 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model IEnumerable<DuAnTotNghiep.Models.Users>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh sách tài khoản</h1>
+
+<p>
+    <a asp-area="Admin" asp-controller="Users" asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td>
+                    <a asp-area="Admin" asp-controller="Users" asp-action="Edit" asp-route-id="@item.UserName">Edit</a> |
+                    <a asp-area="Admin" asp-controller="Users" asp-action="Details" asp-route-id="@item.UserName">Details</a> |
+                    <a asp-area="Admin" asp-controller="Users" asp-action="Delete" asp-route-id="@item.UserName">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
