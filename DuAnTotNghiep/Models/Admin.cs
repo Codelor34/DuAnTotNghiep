@@ -1,4 +1,4 @@
-﻿using Du_An_Tot_Nghiep.Models;
+﻿using DuAnTotNghiep.Models;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
