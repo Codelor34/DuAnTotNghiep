@@ -198,20 +198,25 @@
                         </a>
                         <div class="collapse" id="ui-basic">
                             <ul class="nav flex-column sub-menu">
+<<<<<<< HEAD
                                 <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="NhanVien" asp-action="Index">Quản lý nhân viên</a></li>
                                 <li class="nav-item"> <a class="nav-link">Quản lý khách hàng</a></li>
+=======
+                                <li class="nav-item"> <a class="nav-link">Quản lý nhân viên</a></li>
+                                <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="KhachHang" asp-action="Index">Quản lý khách hàng</a></li>
+>>>>>>> d5b733bbb6bd9d3b939edba73eeac0b2a2aedd9c
                                 <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="Users" asp-action="Index">Quản lý tài khoản</a></li>
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../../pages/icons/mdi.html">
+                        <a class="nav-link" asp-area="Admin" asp-controller="SanPham" asp-action="Index">
                             <span class="menu-title">Quản lý sản phẩm</span>
                             <i class="mdi mdi-contacts menu-icon"></i>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../../pages/tables/basic-table.html">
+                        <a class="nav-link" asp-area="Admin" asp-controller="KhuyenMai" asp-action="Index">
                             <span class="menu-title">Quản lý khuyến mãi</span>
                             <i class="mdi mdi-table-large menu-icon"></i>
                         </a>
@@ -245,7 +250,7 @@
             </nav>
             <!-- partial -->
             <div class="main-panel">
-                <div class="content-wrapper">
+                <div class="content-wrapper" style="overflow: auto;">
                     @RenderBody()
                 </div>
                 <!-- content-wrapper ends -->
