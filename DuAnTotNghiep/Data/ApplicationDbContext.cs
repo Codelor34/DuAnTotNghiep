@@ -90,25 +90,30 @@ namespace DuAnTotNghiep.Data
         //    // Other configurations...
 
         //    services.AddDbContext<ApplicationDbContext>(options =>
-        //        options.UseSqlServer(Configuration.GetConnectionString("Data Source=DESKTOP-ES0LE9K;Initial Catalog=Du_an_tott_nghiep;Integrated Security=True;Encrypt=True;Trust Server Certificate=True")));
+        //        options.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
 
         //    // Other configurations...
         //}
-        private readonly IConfiguration _configuration;
+        //private readonly IConfiguration _configuration;
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration)
-            : base(options)
-        {
-            _configuration = configuration;
-        }
+        //public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration)
+        //    : base(options)
+        //{
+        //    _configuration = configuration;
+        //}
 
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer(_configuration.GetConnectionString("Data Source=DESKTOP-ES0LE9K;Initial Catalog=Du_an_tott_nghiep;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
+        //    }
+        //}
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("Data Source=DESKTOP-ES0LE9K;Initial Catalog=Du_an_tott_nghiep;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
-            }
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-ES0LE9K;Initial Catalog=Du_an_tott_nghiep;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
         }
+
     }
     
 
