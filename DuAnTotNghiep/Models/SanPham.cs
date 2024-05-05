@@ -21,7 +21,7 @@ namespace DuAnTotNghiep.Models
         public Guid ID_MauSac {  get; set; }
         public Guid ID_KichThuoc { get; set; }
         
-        public Admin Admin { get; set; }
+        public Admins Admin { get; set; }
         public ChatLieu ChatLieu { get; set; }
         public HangSX HangSX { get; set; }
         public QuocGia QuocGia { get; set; }   

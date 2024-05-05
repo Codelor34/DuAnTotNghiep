@@ -1,18 +1,22 @@
 ﻿
 using DuAnTotNghiep.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace DuAnTotNghiep.Data
 {
     public class ApplicationDbContext : DbContext
     {
+
+    
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
 
         }
         public DbSet<Users> Users { get; set; }
-        public DbSet<Admin> Admin { get; set; }
+        public DbSet<Admins> Admins { get; set; }
         public DbSet<Anh> anh { get; set; }
         public DbSet<AnhSP> anhsp { get; set; }
         public DbSet<ChatLieu> chatLieu { get; set; }
@@ -43,8 +47,8 @@ namespace DuAnTotNghiep.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
            
-            modelBuilder.Entity<Admin>().HasOne( a => a.Users).WithMany().HasForeignKey(a=> a.UserName );
-            modelBuilder.Entity<NhanVien>().HasOne(a => a.Users).WithMany().HasForeignKey(a => a.UserName );
+            modelBuilder.Entity<Admins>().HasOne( a => a.Users).WithMany().HasForeignKey(a=> a.UserName );
+            modelBuilder.Entity<NhanVien>().HasOne(a => a.Users).WithOne().HasForeignKey<Users>(a => a.UserName );
             modelBuilder.Entity<NhanVien>().HasOne(a => a.Admin).WithMany().HasForeignKey(a => a.HoTenAdmin);
             modelBuilder.Entity<KhachHang>().HasOne(a => a.Admin).WithMany().HasForeignKey(a =>a.HoTenAdmin);
             modelBuilder.Entity<User_Khachhang>().HasOne(a => a.KhachHang).WithOne().HasForeignKey<User_Khachhang>(a => a.Hoten);
@@ -61,7 +65,7 @@ namespace DuAnTotNghiep.Data
             modelBuilder.Entity<AnhSP>().HasOne(a => a.SanPham).WithMany().HasForeignKey(a => a.ID_Sp);
             modelBuilder.Entity<Gio_Hang>().HasOne(a => a.User_Khachhang).WithMany().HasForeignKey(a => a.ID_User);
             modelBuilder.Entity<Gio_Hang_Chi_Tiet>().HasOne(a => a.SanPham).WithMany().HasForeignKey(a => a.ID_Sp);//
-            modelBuilder.Entity<Gio_Hang_Chi_Tiet>().HasOne(a => a.Gio_Hang).WithMany().HasForeignKey(a => a.ID_Gio_Hang);//
+           // modelBuilder.Entity<Gio_Hang_Chi_Tiet>().HasOne(a => a.Gio_Hang).WithMany().HasForeignKey(a => a.ID_Gio_Hang);//
             modelBuilder.Entity<Gio_Hang_Chi_Tiet>().HasOne(a => a.khuyenMai).WithMany().HasForeignKey(a => a.ID_Km);
             modelBuilder.Entity<SanPham_Mua>().HasOne(a => a.SanPham).WithMany().HasForeignKey(a => a.ID_Sp);
             modelBuilder.Entity<SanPham_Mua>().HasOne(a => a.KhuyenMai).WithMany().HasForeignKey(a => a.ID_Km);
@@ -79,15 +83,33 @@ namespace DuAnTotNghiep.Data
             modelBuilder.Entity<HoTroKhachHang>().HasOne(a => a.NhanVien).WithMany().HasForeignKey(a => a.MaNV);
             modelBuilder.Entity<HoTroKhachHang>().HasOne(a => a.User_Khachhang).WithMany().HasForeignKey(a => a.ID_User);
 
-
-
-
-
         }
+
+        //public void ConfigureServices(IServiceCollection services)
+        //{
+        //    // Other configurations...
+
+        //    services.AddDbContext<ApplicationDbContext>(options =>
+        //        options.UseSqlServer(Configuration.GetConnectionString("Data Source=DESKTOP-ES0LE9K;Initial Catalog=Du_an_tott_nghiep;Integrated Security=True;Encrypt=True;Trust Server Certificate=True")));
+
+        //    // Other configurations...
+        //}
+        private readonly IConfiguration _configuration;
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IConfiguration configuration)
+            : base(options)
+        {
+            _configuration = configuration;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-ES0LE9K;Initial Catalog=Du_an_tott_nghiep;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(_configuration.GetConnectionString("Data Source=DESKTOP-ES0LE9K;Initial Catalog=Du_an_tott_nghiep;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"));
+            }
         }
     }
+    
 
 }

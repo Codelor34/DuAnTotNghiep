@@ -14,7 +14,7 @@ namespace DuAnTotNghiep.Models
         public DateTime NgaySinh { get; set; }
         public string? UserName { get; set; }
         public Users Users { get; set; }
-        public Admin Admin { get; set; }
+        public Admins Admin { get; set; }
         public virtual ICollection<DonHang> DonHang { get; set; }
         public virtual ICollection<HoTroKhachHang> HoTroKhachHang { get; set; }
 

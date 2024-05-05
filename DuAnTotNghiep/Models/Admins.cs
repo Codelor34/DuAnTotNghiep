@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace DuAnTotNghiep.Models
 {
-    public class Admin
+    public class Admins
     {
         [Key]
         public string? HoTenAdmin { get; set; }
