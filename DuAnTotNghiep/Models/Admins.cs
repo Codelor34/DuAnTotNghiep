@@ -14,9 +14,6 @@ namespace DuAnTotNghiep.Models
         public DateTime NgaySinh { get; set; }
         public string? UserName { get; set; }
         public Users Users { get; set; }
-        public virtual ICollection<NhanVien> NhanVien { get; set;}
-        public virtual ICollection<KhachHang> KhachHang { get; set; }
-        public virtual ICollection<KhuyenMai> KhuyenMai { get; set; }
-        public virtual ICollection<SanPham> SanPham { get; set; }
+    
     }
 }

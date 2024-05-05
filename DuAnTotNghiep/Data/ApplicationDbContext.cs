@@ -16,7 +16,7 @@ namespace DuAnTotNghiep.Data
 
         }
         public DbSet<Users> Users { get; set; }
-        public DbSet<Admins> Admins { get; set; }
+        public DbSet<Admins> Admin { get; set; }
         public DbSet<Anh> anh { get; set; }
         public DbSet<AnhSP> anhsp { get; set; }
         public DbSet<ChatLieu> chatLieu { get; set; }
@@ -46,9 +46,10 @@ namespace DuAnTotNghiep.Data
         public DbSet<Video> video { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
+            modelBuilder.Entity<Users>()
+        .HasKey(u => u.UserName);
             modelBuilder.Entity<Admins>().HasOne( a => a.Users).WithMany().HasForeignKey(a=> a.UserName );
-            modelBuilder.Entity<NhanVien>().HasOne(a => a.Users).WithOne().HasForeignKey<Users>(a => a.UserName );
+            modelBuilder.Entity<NhanVien>().HasOne(nv => nv.Users).WithOne().HasForeignKey<NhanVien>(nv => nv.UserName);
             modelBuilder.Entity<NhanVien>().HasOne(a => a.Admin).WithMany().HasForeignKey(a => a.HoTenAdmin);
             modelBuilder.Entity<KhachHang>().HasOne(a => a.Admin).WithMany().HasForeignKey(a =>a.HoTenAdmin);
             modelBuilder.Entity<User_Khachhang>().HasOne(a => a.KhachHang).WithOne().HasForeignKey<User_Khachhang>(a => a.Hoten);
@@ -82,7 +83,7 @@ namespace DuAnTotNghiep.Data
             modelBuilder.Entity<Video>().HasOne(a => a.DanhGia_NhanXet).WithMany().HasForeignKey(a => a.ID_DanhGia_NhanXet);
             modelBuilder.Entity<HoTroKhachHang>().HasOne(a => a.NhanVien).WithMany().HasForeignKey(a => a.MaNV);
             modelBuilder.Entity<HoTroKhachHang>().HasOne(a => a.User_Khachhang).WithMany().HasForeignKey(a => a.ID_User);
-
+           
         }
 
         //public void ConfigureServices(IServiceCollection services)
@@ -113,6 +114,7 @@ namespace DuAnTotNghiep.Data
         {
             optionsBuilder.UseSqlServer("Data Source=DESKTOP-ES0LE9K;Initial Catalog=Du_an_tott_nghiep;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
         }
+        
 
     }
     
