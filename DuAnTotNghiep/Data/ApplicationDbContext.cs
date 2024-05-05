@@ -44,7 +44,42 @@ namespace DuAnTotNghiep.Data
         {
            
             modelBuilder.Entity<Admin>().HasOne( a => a.Users).WithMany().HasForeignKey(a=> a.UserName );
-            
+            modelBuilder.Entity<NhanVien>().HasOne(a => a.Users).WithMany().HasForeignKey(a => a.UserName );
+            modelBuilder.Entity<NhanVien>().HasOne(a => a.Admin).WithMany().HasForeignKey(a => a.HoTenAdmin);
+            modelBuilder.Entity<KhachHang>().HasOne(a => a.Admin).WithMany().HasForeignKey(a =>a.HoTenAdmin);
+            modelBuilder.Entity<User_Khachhang>().HasOne(a => a.KhachHang).WithOne().HasForeignKey<User_Khachhang>(a => a.Hoten);
+            modelBuilder.Entity<User_Khachhang>().HasOne(a => a.Users).WithOne().HasForeignKey<User_Khachhang>(a => a.UserName);
+            modelBuilder.Entity<KhuyenMai>().HasOne(a => a.Admin).WithMany().HasForeignKey(a => a.HoTenAdmin);
+            modelBuilder.Entity<SanPham>().HasOne(a => a.Admin).WithMany().HasForeignKey(a => a.HoTenAdmin);
+            modelBuilder.Entity<SanPham>().HasOne(a => a.ChatLieu).WithMany().HasForeignKey(a => a.ID_ChatLieu);//
+            modelBuilder.Entity<SanPham>().HasOne(a => a.HangSX).WithMany().HasForeignKey(a => a.ID_Hang);//
+            modelBuilder.Entity<SanPham>().HasOne(a => a.QuocGia).WithMany().HasForeignKey(a=>a.ID_QuocGia);//
+            modelBuilder.Entity<SanPham>().HasOne(a => a.LoaiSP).WithMany().HasForeignKey(a => a.ID_LoaiSp);//
+            modelBuilder.Entity<SanPham>().HasOne(a => a.LoaiDt).WithMany().HasForeignKey(a => a.ID_LoaiDt);//
+            modelBuilder.Entity<SanPham>().HasOne(a => a.MauSac).WithMany().HasForeignKey(a => a.ID_MauSac);//
+            modelBuilder.Entity<SanPham>().HasOne(a => a.KichThuoc).WithMany().HasForeignKey(a => a.ID_KichThuoc);//
+            modelBuilder.Entity<AnhSP>().HasOne(a => a.SanPham).WithMany().HasForeignKey(a => a.ID_Sp);
+            modelBuilder.Entity<Gio_Hang>().HasOne(a => a.User_Khachhang).WithMany().HasForeignKey(a => a.ID_User);
+            modelBuilder.Entity<Gio_Hang_Chi_Tiet>().HasOne(a => a.SanPham).WithMany().HasForeignKey(a => a.ID_Sp);//
+            modelBuilder.Entity<Gio_Hang_Chi_Tiet>().HasOne(a => a.Gio_Hang).WithMany().HasForeignKey(a => a.ID_Gio_Hang);//
+            modelBuilder.Entity<Gio_Hang_Chi_Tiet>().HasOne(a => a.khuyenMai).WithMany().HasForeignKey(a => a.ID_Km);
+            modelBuilder.Entity<SanPham_Mua>().HasOne(a => a.SanPham).WithMany().HasForeignKey(a => a.ID_Sp);
+            modelBuilder.Entity<SanPham_Mua>().HasOne(a => a.KhuyenMai).WithMany().HasForeignKey(a => a.ID_Km);
+            modelBuilder.Entity<SanPham_Mua>().HasOne(a => a.User_Khachhang).WithMany().HasForeignKey(a => a.ID_User);
+            modelBuilder.Entity<ThanhToan>().HasOne(a => a.Gio_Hang_Chi_Tiet).WithMany().HasForeignKey(a => a.ID_Gio_Hang_Chi_Tiet);
+            modelBuilder.Entity<ThanhToan>().HasOne(a => a.SanPham_Mua).WithMany().HasForeignKey(a => a.ID_SP_Mua);
+            modelBuilder.Entity<ThanhToan>().HasOne(a => a.PhuongThucThanhToan).WithMany().HasForeignKey(a => a.ID_PhuongThucThanhToan);
+            modelBuilder.Entity<DonHang>().HasOne(a => a.NhanVien).WithMany().HasForeignKey(a => a.ID_Don_Hang);
+            modelBuilder.Entity<Don_Hang_Thanh_Toan>().HasOne(a => a.ThanhToan).WithMany().HasForeignKey(a => a.ID_ThanhToan);
+            modelBuilder.Entity<Don_Hang_Thanh_Toan>().HasOne(a => a.DonHang).WithMany().HasForeignKey(a => a.ID_Don_Hang);
+            modelBuilder.Entity<LichSuDonHang>().HasOne(a => a.Don_Hoan_Thanh_).WithMany().HasForeignKey(a => a.ID_Don_Hoan_Thanh);
+            modelBuilder.Entity<DanhGia_NhanXet>().HasOne(a => a.Don_Hoan_Thanh).WithMany().HasForeignKey(a => a.ID_Don_Hoan_Thanh);
+            modelBuilder.Entity<Anh>().HasOne(a => a.DanhGia_NhanXet).WithMany().HasForeignKey(a => a.ID_DanhGia_NhanXet);
+            modelBuilder.Entity<Video>().HasOne(a => a.DanhGia_NhanXet).WithMany().HasForeignKey(a => a.ID_DanhGia_NhanXet);
+            modelBuilder.Entity<HoTroKhachHang>().HasOne(a => a.NhanVien).WithMany().HasForeignKey(a => a.MaNV);
+            modelBuilder.Entity<HoTroKhachHang>().HasOne(a => a.User_Khachhang).WithMany().HasForeignKey(a => a.ID_User);
+
+
 
 
 

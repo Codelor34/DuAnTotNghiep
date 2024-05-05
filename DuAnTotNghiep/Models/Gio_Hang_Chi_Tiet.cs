@@ -13,6 +13,6 @@ namespace DuAnTotNghiep.Models
         public SanPham SanPham { get; set; }
         public KhuyenMai khuyenMai { get; set; }
         public Gio_Hang Gio_Hang { get; set; }
-        public virtual ICollection<ThanhToan> ThanhToan { get; set; }
+        
     }
 }
