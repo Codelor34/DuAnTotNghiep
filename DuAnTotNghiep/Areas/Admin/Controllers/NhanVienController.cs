@@ -50,7 +50,7 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
         [Route("Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( NhanVien nhanVien)
+        public async Task<IActionResult> Create(NhanVien nhanVien)
         {
             if (ModelState.IsValid)
             {
@@ -60,6 +60,25 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
             }
             return View(nhanVien);
         }
+        //[HttpGet]
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(NhanVien nhanVien)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        nhanVien.MaNV = Guid.NewGuid();
+        //        _context.Add(nhanVien);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(nhanVien);
+        //}
 
 
         [Route("Edit")]
