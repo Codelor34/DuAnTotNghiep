@@ -42,43 +42,43 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
 
             return View(NhanVien);
         }
-        [Route("Create")]
-        public ActionResult Create()
-        {
-            return View();
-        }
-        [Route("Create")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(NhanVien nhanVien)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(nhanVien);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(nhanVien);
-        }
-        //[HttpGet]
-        //public IActionResult Create()
+        //[Route("Create")]
+        //public ActionResult Create()
         //{
         //    return View();
         //}
-
+        //[Route("Create")]
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create(NhanVien nhanVien)
         //{
         //    if (ModelState.IsValid)
         //    {
-        //        nhanVien.MaNV = Guid.NewGuid();
         //        _context.Add(nhanVien);
         //        await _context.SaveChangesAsync();
         //        return RedirectToAction(nameof(Index));
         //    }
         //    return View(nhanVien);
         //}
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("MaNV,HoTenNV,HoTenAdmin,Sdt,Email,DiaChi,NgaySinh,UserName")]NhanVien nhanVien)
+        {
+            if (ModelState.IsValid)
+            {
+                nhanVien.MaNV = Guid.NewGuid();
+                _context.Add(nhanVien);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(nhanVien);
+        }
 
 
         [Route("Edit")]
@@ -128,6 +128,11 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(nhanVien);
+        }
+
+        private bool NhanVienExists(Guid? maNV)
+        {
+            throw new NotImplementedException();
         }
 
         private bool NhanVienExists(Guid maNV)

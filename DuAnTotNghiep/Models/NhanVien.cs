@@ -5,7 +5,7 @@ namespace DuAnTotNghiep.Models
     public class NhanVien
     {
         [Key]
-        public Guid MaNV { get; set; }
+        public Guid? MaNV { get; set; }
         public string? HoTenNV { get; set; }
         public string? HoTenAdmin { get; set; }
         public string ? Sdt { get; set; }
@@ -15,8 +15,6 @@ namespace DuAnTotNghiep.Models
         public string? UserName { get; set; }
         public Users Users { get; set; }
         public Admins Admin { get; set; }
-        public virtual ICollection<DonHang> DonHang { get; set; }
-        public virtual ICollection<HoTroKhachHang> HoTroKhachHang { get; set; }
 
     }
 }

@@ -10,6 +10,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddSession(Option =>
+{
+    Option.IdleTimeout = TimeSpan.FromSeconds(60);
+});
 
 var app = builder.Build();
 
@@ -30,7 +34,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Access}/{action=Login}");
 
 app.Run();
 
