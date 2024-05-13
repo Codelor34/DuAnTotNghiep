@@ -12,12 +12,12 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin")]
-    [Route("Admin/KhuyenMai")]
-    public class KhuyenMaiController : Controller
+    [Route("Admin/MauSac")]
+    public class MauSacController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public KhuyenMaiController(ApplicationDbContext context)
+        public MauSacController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -25,84 +25,81 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.KhuyenMai.Include(k => k.Admins);
-            return View(await applicationDbContext.ToListAsync());
+              return _context.MauSac != null ? 
+                          View(await _context.MauSac.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.MauSac'  is null.");
         }
 
         [Route("Details")]
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.KhuyenMai == null)
+            if (id == null || _context.MauSac == null)
             {
                 return NotFound();
             }
 
-            var khuyenMai = await _context.KhuyenMai
-                .Include(k => k.Admins)
-                .FirstOrDefaultAsync(m => m.ID_Km == id);
-            if (khuyenMai == null)
+            var mauSac = await _context.MauSac
+                .FirstOrDefaultAsync(m => m.ID_MauSac == id);
+            if (mauSac == null)
             {
                 return NotFound();
             }
 
-            return View(khuyenMai);
+            return View(mauSac);
         }
 
         [Route("Create")]
         public IActionResult Create()
         {
-            ViewData["HoTenAdmin"] = new SelectList(_context.Admins, "HoTenAdmin", "HoTenAdmin");
             return View();
         }
 
         [Route("Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Km,TruongTrinhKM,MoTa,HoTenAdmin")] KhuyenMai khuyenMai)
+        public async Task<IActionResult> Create([Bind("ID_MauSac,Mausac")] MauSac mauSac)
         {
             if (!ModelState.IsValid)
             {
-                khuyenMai.ID_Km = Guid.NewGuid();
-                _context.Add(khuyenMai);
+                mauSac.ID_MauSac = Guid.NewGuid();
+                _context.Add(mauSac);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HoTenAdmin"] = new SelectList(_context.Admins, "HoTenAdmin", "HoTenAdmin", khuyenMai.HoTenAdmin);
-            return View(khuyenMai);
+            return View(mauSac);
         }
 
         [Route("Edit")]
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.KhuyenMai == null)
+            if (id == null || _context.MauSac == null)
             {
                 return NotFound();
             }
 
-            var khuyenMai = await _context.KhuyenMai.FindAsync(id);
-            if (khuyenMai == null)
+            var mauSac = await _context.MauSac.FindAsync(id);
+            if (mauSac == null)
             {
                 return NotFound();
             }
-            ViewData["HoTenAdmin"] = new SelectList(_context.Admins, "HoTenAdmin", "HoTenAdmin", khuyenMai.HoTenAdmin);
-            return View(khuyenMai);
+            return View(mauSac);
         }
 
         [Route("Edit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ID_Km,TruongTrinhKM,MoTa,HoTenAdmin")] KhuyenMai khuyenMai)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ID_MauSac,Mausac")] MauSac mauSac)
         {
             if (!ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(khuyenMai);
+                    _context.Update(mauSac);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!KhuyenMaiExists(khuyenMai.ID_Km))
+                    if (!MauSacExists(mauSac.ID_MauSac))
                     {
                         return NotFound();
                     }
@@ -113,27 +110,25 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HoTenAdmin"] = new SelectList(_context.Admins, "HoTenAdmin", "HoTenAdmin", khuyenMai.HoTenAdmin);
-            return View(khuyenMai);
+            return View(mauSac);
         }
 
         [Route("Delete")]
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.KhuyenMai == null)
+            if (id == null || _context.MauSac == null)
             {
                 return NotFound();
             }
 
-            var khuyenMai = await _context.KhuyenMai
-                .Include(k => k.Admins)
-                .FirstOrDefaultAsync(m => m.ID_Km == id);
-            if (khuyenMai == null)
+            var mauSac = await _context.MauSac
+                .FirstOrDefaultAsync(m => m.ID_MauSac == id);
+            if (mauSac == null)
             {
                 return NotFound();
             }
 
-            return View(khuyenMai);
+            return View(mauSac);
         }
 
         [Route("Delete")]
@@ -141,23 +136,23 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.KhuyenMai == null)
+            if (_context.MauSac == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.KhuyenMai'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.MauSac'  is null.");
             }
-            var khuyenMai = await _context.KhuyenMai.FindAsync(id);
-            if (khuyenMai != null)
+            var mauSac = await _context.MauSac.FindAsync(id);
+            if (mauSac != null)
             {
-                _context.KhuyenMai.Remove(khuyenMai);
+                _context.MauSac.Remove(mauSac);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool KhuyenMaiExists(Guid id)
+        private bool MauSacExists(Guid id)
         {
-          return (_context.KhuyenMai?.Any(e => e.ID_Km == id)).GetValueOrDefault();
+          return (_context.MauSac?.Any(e => e.ID_MauSac == id)).GetValueOrDefault();
         }
     }
 }

@@ -1,7 +1,10 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @model DuAnTotNghiep.Models.KhuyenMai
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h1>Create</h1>
@@ -24,7 +27,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="HoTenAdmin" class="control-label"></label>
-                <select asp-for="HoTenAdmin" class ="form-control" asp-items="ViewBag.HoTenAdmin"></select>
+                <select asp-for="HoTenAdmin" class="form-control" asp-items="ViewBag.HoTenAdmin"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -36,7 +39,3 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

@@ -1,10 +1,12 @@
-﻿@model DuAnTotNghiep.Models.NhanVien
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
+@model DuAnTotNghiep.Models.NhanVien
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
+
 <h1>Create</h1>
 
 <h4>NhanVien</h4>
@@ -14,19 +16,13 @@
         <form asp-action="Create" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="MaNV" class="control-label"></label>
-                <input asp-for="MaNV" class="form-control" />
-                <span asp-validation-for="MaNV" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="HoTenNV" class="control-label"></label>
                 <input asp-for="HoTenNV" class="form-control" />
                 <span asp-validation-for="HoTenNV" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="HoTenAdmin" class="control-label"></label>
-                <input asp-for="HoTenAdmin" class="form-control" />
-                <span asp-validation-for="HoTenAdmin" class="text-danger"></span>
+                <select asp-for="HoTenAdmin" class="form-control" asp-items="ViewBag.HoTenAdmin"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Sdt" class="control-label"></label>
@@ -50,8 +46,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
+                <select asp-for="UserName" class="form-control" asp-items="ViewBag.UserName"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -64,6 +59,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

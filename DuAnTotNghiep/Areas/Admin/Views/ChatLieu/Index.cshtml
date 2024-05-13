@@ -1,0 +1,40 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model IEnumerable<DuAnTotNghiep.Models.ChatLieu>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Chatlieu)
+            </th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Chatlieu)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID_ChatLieu">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID_ChatLieu">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID_ChatLieu">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

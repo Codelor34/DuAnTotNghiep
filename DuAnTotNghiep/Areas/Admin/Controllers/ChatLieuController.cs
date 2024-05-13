@@ -12,12 +12,12 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin")]
-    [Route("Admin/KhuyenMai")]
-    public class KhuyenMaiController : Controller
+    [Route("Admin/ChatLieu")]
+    public class ChatLieuController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public KhuyenMaiController(ApplicationDbContext context)
+        public ChatLieuController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -25,84 +25,81 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.KhuyenMai.Include(k => k.Admins);
-            return View(await applicationDbContext.ToListAsync());
+              return _context.ChatLieu != null ? 
+                          View(await _context.ChatLieu.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.ChatLieu'  is null.");
         }
 
         [Route("Details")]
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.KhuyenMai == null)
+            if (id == null || _context.ChatLieu == null)
             {
                 return NotFound();
             }
 
-            var khuyenMai = await _context.KhuyenMai
-                .Include(k => k.Admins)
-                .FirstOrDefaultAsync(m => m.ID_Km == id);
-            if (khuyenMai == null)
+            var chatLieu = await _context.ChatLieu
+                .FirstOrDefaultAsync(m => m.ID_ChatLieu == id);
+            if (chatLieu == null)
             {
                 return NotFound();
             }
 
-            return View(khuyenMai);
+            return View(chatLieu);
         }
 
         [Route("Create")]
         public IActionResult Create()
         {
-            ViewData["HoTenAdmin"] = new SelectList(_context.Admins, "HoTenAdmin", "HoTenAdmin");
             return View();
         }
 
         [Route("Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Km,TruongTrinhKM,MoTa,HoTenAdmin")] KhuyenMai khuyenMai)
+        public async Task<IActionResult> Create([Bind("ID_ChatLieu,Chatlieu")] ChatLieu chatLieu)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                khuyenMai.ID_Km = Guid.NewGuid();
-                _context.Add(khuyenMai);
+                chatLieu.ID_ChatLieu = Guid.NewGuid();
+                _context.Add(chatLieu);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HoTenAdmin"] = new SelectList(_context.Admins, "HoTenAdmin", "HoTenAdmin", khuyenMai.HoTenAdmin);
-            return View(khuyenMai);
+            return View(chatLieu);
         }
 
         [Route("Edit")]
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.KhuyenMai == null)
+            if (id == null || _context.ChatLieu == null)
             {
                 return NotFound();
             }
 
-            var khuyenMai = await _context.KhuyenMai.FindAsync(id);
-            if (khuyenMai == null)
+            var chatLieu = await _context.ChatLieu.FindAsync(id);
+            if (chatLieu == null)
             {
                 return NotFound();
             }
-            ViewData["HoTenAdmin"] = new SelectList(_context.Admins, "HoTenAdmin", "HoTenAdmin", khuyenMai.HoTenAdmin);
-            return View(khuyenMai);
+            return View(chatLieu);
         }
 
         [Route("Edit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ID_Km,TruongTrinhKM,MoTa,HoTenAdmin")] KhuyenMai khuyenMai)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ID_ChatLieu,Chatlieu")] ChatLieu chatLieu)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(khuyenMai);
+                    _context.Update(chatLieu);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!KhuyenMaiExists(khuyenMai.ID_Km))
+                    if (!ChatLieuExists(chatLieu.ID_ChatLieu))
                     {
                         return NotFound();
                     }
@@ -113,27 +110,25 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["HoTenAdmin"] = new SelectList(_context.Admins, "HoTenAdmin", "HoTenAdmin", khuyenMai.HoTenAdmin);
-            return View(khuyenMai);
+            return View(chatLieu);
         }
 
         [Route("Delete")]
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.KhuyenMai == null)
+            if (id == null || _context.ChatLieu == null)
             {
                 return NotFound();
             }
 
-            var khuyenMai = await _context.KhuyenMai
-                .Include(k => k.Admins)
-                .FirstOrDefaultAsync(m => m.ID_Km == id);
-            if (khuyenMai == null)
+            var chatLieu = await _context.ChatLieu
+                .FirstOrDefaultAsync(m => m.ID_ChatLieu == id);
+            if (chatLieu == null)
             {
                 return NotFound();
             }
 
-            return View(khuyenMai);
+            return View(chatLieu);
         }
 
         [Route("Delete")]
@@ -141,23 +136,23 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.KhuyenMai == null)
+            if (_context.ChatLieu == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.KhuyenMai'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.ChatLieu'  is null.");
             }
-            var khuyenMai = await _context.KhuyenMai.FindAsync(id);
-            if (khuyenMai != null)
+            var chatLieu = await _context.ChatLieu.FindAsync(id);
+            if (chatLieu != null)
             {
-                _context.KhuyenMai.Remove(khuyenMai);
+                _context.ChatLieu.Remove(chatLieu);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool KhuyenMaiExists(Guid id)
+        private bool ChatLieuExists(Guid id)
         {
-          return (_context.KhuyenMai?.Any(e => e.ID_Km == id)).GetValueOrDefault();
+          return (_context.ChatLieu?.Any(e => e.ID_ChatLieu == id)).GetValueOrDefault();
         }
     }
 }

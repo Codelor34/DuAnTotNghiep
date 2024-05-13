@@ -5,6 +5,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    List<string> extensions = new List<string>() { ".jpg", ".png", ".tiff", ".gif", "jpeg" };
 }
 
 <h1>Danh sách sản phẩm</h1>
@@ -12,7 +13,7 @@
 <div class="container-fluid text-center">
     <div class="row">
         <div class="col">
-            <div class="btn btn-primary p-3"><a>Quản lý chất liệu</a></div>
+            <div class="btn btn-primary p-3"><a asp-controller="ChatLieu" asp-action="Index">Quản lý chất liệu</a></div>
         </div>
         <div class="col">
             <div class="btn btn-secondary p-3"><a>Quản lý hãng sản xuất</a></div>
@@ -27,14 +28,14 @@
             <div class="btn btn-warning p-3"><a>Quản lý loại đối tượng</a></div>
         </div>
         <div class="col">
-            <div class="btn btn-info p-3"><a>Quản lý màu sắc</a></div>
+            <div class="btn btn-info p-3"><a asp-controller="MauSac" asp-action="Index">Quản lý màu sắc</a></div>
         </div>
         <div class="col">
             <div class="btn btn-light p-3"><a>Quản lý kích thước</a></div>
         </div>
     </div>
 </div>
-
+<hr />
 <p>
     <a asp-action="Create">Tạo mới sản phẩm</a>
 </p>
@@ -103,7 +104,17 @@
                     @Html.DisplayFor(modelItem => item.Gia)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AnhDaiDien)
+                    @{
+                        var extension = System.IO.Path.GetExtension(item.AnhDaiDien); // Lấy đuôi ảnh
+                    }
+                    @if (@extensions.Contains(extension))
+                    {
+                        <img src="~/img/@item.AnhDaiDien" height="150px">
+                    }
+                    else
+                    {
+                        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Finternetexplorerbeta%2Fposts%2Fanh-li%25C3%25AAm-gi%25C3%25A0nh-cup-v%25C3%25A0ng-th%25E1%25BB%2583-hi%25E1%25BB%2587n-%25C4%2591%25E1%25BA%25B3ng-c%25E1%25BA%25A5p-out-tr%25C3%25ACnh-to%25C3%25A0n-b%25E1%25BB%2599-c%25C3%25A1c-%25C4%2591%25E1%25BB%2591i-th%25E1%25BB%25A7-%25C4%2591%25E1%25BA%25BFn-t%25E1%25BB%25AB-n%2F728945255938708%2F&psig=AOvVaw2HlyEieUFs1K1YDTZcAllt&ust=1711695350707000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKCm15ywloUDFQAAAAAdAAAAABAE">
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DanhGia)
@@ -133,9 +144,9 @@
                     @Html.DisplayFor(modelItem => item.KichThuoc.ID_KichThuoc)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID_Sp">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID_Sp">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID_Sp">Delete</a>
+                    <a class="badge bg-primary" asp-action="Edit" asp-route-id="@item.ID_Sp">Edit</a> |
+                    <a class="badge bg-info" asp-action="Details" asp-route-id="@item.ID_Sp">Details</a> |
+                    <a class="badge bg-danger" asp-action="Delete" asp-route-id="@item.ID_Sp">Delete</a>
                 </td>
             </tr>
         }

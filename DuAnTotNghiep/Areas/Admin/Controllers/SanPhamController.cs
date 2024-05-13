@@ -29,7 +29,7 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Admin/SanPham/Details/5
+        [Route("Details")]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.SanPham == null)
@@ -54,7 +54,7 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
             return View(sanPham);
         }
 
-        // GET: Admin/SanPham/Create
+        [Route("Create")]
         public IActionResult Create()
         {
             ViewData["ID_ChatLieu"] = new SelectList(_context.ChatLieu, "ID_ChatLieu", "ID_ChatLieu");
@@ -67,15 +67,23 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
             return View();
         }
 
-        // POST: Admin/SanPham/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID_Sp,TenSP,MoTa,SoLuong,Gia,AnhDaiDien,DanhGia,HoTenAdmin,ID_ChatLieu,ID_Hang,ID_QuocGia,ID_LoaiSp,ID_LoaiDt,ID_MauSac,ID_KichThuoc")] SanPham sanPham)
+        public async Task<IActionResult> Create([Bind("ID_Sp,TenSP,MoTa,SoLuong,Gia,AnhDaiDien,DanhGia,HoTenAdmin,ID_ChatLieu,ID_Hang,ID_QuocGia,ID_LoaiSp,ID_LoaiDt,ID_MauSac,ID_KichThuoc")] SanPham sanPham , IFormFile imgFile)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                // THực hiện tạo 1 đường dẫn để trỏ tới thư mục wwwroot - nơi chứa ảnh
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", imgFile.FileName);
+                // Ví dụ kết quả thu được sẽ có dạng wwwroot/img/concho.png;
+                // Copy ảnh tải lên vào thư mục root
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    imgFile.CopyTo(stream); // Copy cái ảnh mà được các bạn chọn vào cái stream đó
+                }
+                // Cập nhật đường dẫn ảnh
+                sanPham.AnhDaiDien = imgFile.FileName;
                 sanPham.ID_Sp = Guid.NewGuid();
                 _context.Add(sanPham);
                 await _context.SaveChangesAsync();
@@ -91,7 +99,7 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
             return View(sanPham);
         }
 
-        // GET: Admin/SanPham/Edit/5
+        [Route("Edit")]
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.SanPham == null)
@@ -114,22 +122,24 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
             return View(sanPham);
         }
 
-        // POST: Admin/SanPham/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Route("Edit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ID_Sp,TenSP,MoTa,SoLuong,Gia,AnhDaiDien,DanhGia,HoTenAdmin,ID_ChatLieu,ID_Hang,ID_QuocGia,ID_LoaiSp,ID_LoaiDt,ID_MauSac,ID_KichThuoc")] SanPham sanPham)
+        public async Task<IActionResult> Edit([Bind("ID_Sp,TenSP,MoTa,SoLuong,Gia,AnhDaiDien,DanhGia,HoTenAdmin,ID_ChatLieu,ID_Hang,ID_QuocGia,ID_LoaiSp,ID_LoaiDt,ID_MauSac,ID_KichThuoc")] SanPham sanPham , IFormFile imgFile)
         {
-            if (id != sanPham.ID_Sp)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", imgFile.FileName);
+                    // Ví dụ kết quả thu được sẽ có dạng wwwroot/img/concho.png;
+                    // Copy ảnh tải lên vào thư mục root
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        imgFile.CopyTo(stream); // Copy cái ảnh mà được các bạn chọn vào cái stream đó
+                    }
+                    // Cập nhật đường dẫn ảnh
+                    sanPham.AnhDaiDien = imgFile.FileName;
                     _context.Update(sanPham);
                     await _context.SaveChangesAsync();
                 }
@@ -156,8 +166,8 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
             return View(sanPham);
         }
 
-        // GET: Admin/SanPham/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(Guid id)
         {
             if (id == null || _context.SanPham == null)
             {
@@ -181,7 +191,7 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
             return View(sanPham);
         }
 
-        // POST: Admin/SanPham/Delete/5
+        [Route("Delete")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)

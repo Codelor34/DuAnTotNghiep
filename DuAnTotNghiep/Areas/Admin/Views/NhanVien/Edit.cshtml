@@ -1,7 +1,10 @@
-﻿@model DuAnTotNghiep.Models.NhanVien
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model DuAnTotNghiep.Models.NhanVien
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h1>Edit</h1>
@@ -12,11 +15,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="MaNV" class="control-label"></label>
-                <input asp-for="MaNV" class="form-control" />
-                <span asp-validation-for="MaNV" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="MaNV" />
             <div class="form-group">
                 <label asp-for="HoTenNV" class="control-label"></label>
                 <input asp-for="HoTenNV" class="form-control" />
@@ -24,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="HoTenAdmin" class="control-label"></label>
-                <input asp-for="HoTenAdmin" class="form-control" />
+                <select asp-for="HoTenAdmin" class="form-control" asp-items="ViewBag.HoTenAdmin"></select>
                 <span asp-validation-for="HoTenAdmin" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -49,7 +48,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
+                <select asp-for="UserName" class="form-control" asp-items="ViewBag.UserName"></select>
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">

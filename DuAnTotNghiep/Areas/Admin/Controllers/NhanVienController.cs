@@ -1,9 +1,12 @@
-﻿using DuAnTotNghiep.Data;
-using DuAnTotNghiep.Models;
-using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using DuAnTotNghiep.Data;
+using DuAnTotNghiep.Models;
 
 namespace DuAnTotNghiep.Areas.Admin.Controllers
 {
@@ -13,6 +16,7 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
     public class NhanVienController : Controller
     {
         private readonly ApplicationDbContext _context;
+
         public NhanVienController(ApplicationDbContext context)
         {
             _context = context;
@@ -21,93 +25,80 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            return _context.nhanVien != null ?
-                View(await _context.nhanVien.ToListAsync()) :
-                Problem("Entity set 'ApplicationDbContext.NhanVien'  is null.\"");
+            var applicationDbContext = _context.NhanVien.Include(n => n.Admins).Include(n => n.Users);
+            return View(await applicationDbContext.ToListAsync());
         }
+
         [Route("Details")]
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.nhanVien == null)
+            if (id == null || _context.NhanVien == null)
             {
                 return NotFound();
             }
 
-            var NhanVien = await _context.nhanVien
+            var nhanVien = await _context.NhanVien
+                .Include(n => n.Admins)
+                .Include(n => n.Users)
                 .FirstOrDefaultAsync(m => m.MaNV == id);
-            if (NhanVien == null)
+            if (nhanVien == null)
             {
                 return NotFound();
             }
 
-            return View(NhanVien);
+            return View(nhanVien);
         }
-        //[Route("Create")]
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-        //[Route("Create")]
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(NhanVien nhanVien)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(nhanVien);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(nhanVien);
-        //}
-        [HttpGet]
+
+        [Route("Create")]
         public IActionResult Create()
         {
+            var khachHangUsers = _context.Users.Where(u => u.Role == "Nhân viên").Select(u => u.UserName).Except(_context.User_Khachhang.Select(uk => uk.UserName)).ToList();
+            ViewData["HoTenAdmin"] = new SelectList(_context.Admins, "HoTenAdmin", "HoTenAdmin");
+            ViewData["UserName"] = new SelectList(khachHangUsers);
             return View();
         }
 
+        [Route("Create")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaNV,HoTenNV,HoTenAdmin,Sdt,Email,DiaChi,NgaySinh,UserName")]NhanVien nhanVien)
+        public async Task<IActionResult> Create([Bind("MaNV,HoTenNV,HoTenAdmin,Sdt,Email,DiaChi,NgaySinh,UserName")] NhanVien nhanVien)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 nhanVien.MaNV = Guid.NewGuid();
                 _context.Add(nhanVien);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["HoTenAdmin"] = new SelectList(_context.Admins, "HoTenAdmin", "HoTenAdmin", nhanVien.HoTenAdmin);
+            ViewData["UserName"] = new SelectList(_context.Users, "UserName", "UserName", nhanVien.UserName);
             return View(nhanVien);
         }
-
 
         [Route("Edit")]
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.nhanVien == null)
+            if (id == null || _context.NhanVien == null)
             {
                 return NotFound();
             }
 
-            var nhanvien = await _context.nhanVien.FindAsync(id);
-            if (nhanvien == null)
+            var nhanVien = await _context.NhanVien.FindAsync(id);
+            if (nhanVien == null)
             {
                 return NotFound();
             }
-            return View(nhanvien);
+            ViewData["HoTenAdmin"] = new SelectList(_context.Admins, "HoTenAdmin", "HoTenAdmin", nhanVien.HoTenAdmin);
+            ViewData["UserName"] = new SelectList(_context.Users, "UserName", "UserName", nhanVien.UserName);
+            return View(nhanVien);
         }
 
         [Route("Edit")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, NhanVien nhanVien)
+        public async Task<IActionResult> Edit([Bind("MaNV,HoTenNV,HoTenAdmin,Sdt,Email,DiaChi,NgaySinh,UserName")] NhanVien nhanVien)
         {
-
-            if(id != nhanVien.MaNV)
-            {
-                return NotFound();
-            }
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {
@@ -127,30 +118,22 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["HoTenAdmin"] = new SelectList(_context.Admins, "HoTenAdmin", "HoTenAdmin", nhanVien.HoTenAdmin);
+            ViewData["UserName"] = new SelectList(_context.Users, "UserName", "UserName", nhanVien.UserName);
             return View(nhanVien);
         }
-
-        private bool NhanVienExists(Guid? maNV)
-        {
-            throw new NotImplementedException();
-        }
-
-        private bool NhanVienExists(Guid maNV)
-        {
-            throw new NotImplementedException();
-        }
-
-
 
         [Route("Delete")]
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.nhanVien == null)
+            if (id == null || _context.NhanVien == null)
             {
                 return NotFound();
             }
 
-            var nhanVien = await _context.nhanVien
+            var nhanVien = await _context.NhanVien
+                .Include(n => n.Admins)
+                .Include(n => n.Users)
                 .FirstOrDefaultAsync(m => m.MaNV == id);
             if (nhanVien == null)
             {
@@ -163,20 +146,25 @@ namespace DuAnTotNghiep.Areas.Admin.Controllers
         [Route("Delete")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Users == null)
+            if (_context.NhanVien == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Users'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.NhanVien'  is null.");
             }
-            var users = await _context.Users.FindAsync(id);
-            if (users != null)
+            var nhanVien = await _context.NhanVien.FindAsync(id);
+            if (nhanVien != null)
             {
-                _context.Users.Remove(users);
+                _context.NhanVien.Remove(nhanVien);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        private bool NhanVienExists(Guid id)
+        {
+          return (_context.NhanVien?.Any(e => e.MaNV == id)).GetValueOrDefault();
         }
     }
 }
