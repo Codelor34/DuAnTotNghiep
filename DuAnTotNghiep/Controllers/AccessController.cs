@@ -14,18 +14,23 @@ namespace DuAnTotNghiep.Controllers
         }
 
         public IActionResult Login()
-        {           
+        {
             return View();
         }
         [HttpPost]
-       public IActionResult Login(Users user)
+        public IActionResult Login(Users user)
         {
-            var u = _context.Users.Where(x => x.UserName.Equals(user.UserName) && x.Password.Equals(user.Password)&& x.Role == "Quản lý").FirstOrDefault();
-            var p = _context.Users.Where(x => x.UserName.Equals(user.UserName) && x.Password.Equals(user.Password) && x.Role == "Khách hàng").FirstOrDefault();
+            var u = _context.Users.Where(x => x.UserName.Equals(user.UserName) && x.Password.Equals(user.Password) && x.Role == "Quản Lý").FirstOrDefault();
+            var p = _context.Users.Where(x => x.UserName.Equals(user.UserName) && x.Password.Equals(user.Password) && x.Role == "Khách Hàng").FirstOrDefault();
             if (u != null && p == null)
             {
-              
-                return RedirectToAction("Index","Home");
+                HttpContext.Session.SetString("Username", u.UserName.ToString());
+                return RedirectToAction("Index", "Home");
+            }
+            else if (p != null && u == null)
+            {
+                HttpContext.Session.SetString("Username", p.UserName.ToString());
+                return RedirectToAction("Privacy", "Home");
             }
             return View();
         }
