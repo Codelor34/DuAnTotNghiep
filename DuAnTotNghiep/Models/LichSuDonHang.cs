@@ -8,6 +8,5 @@ namespace DuAnTotNghiep.Models
         public Guid ID_LichSuDonHang { get; set; }
         public Guid ID_Don_Hoan_Thanh { get; set; }
         public DateTime NgayThang { get; set; }
-        public Don_Hoan_Thanh Don_Hoan_Thanh_ { get; set; }
     }
 }

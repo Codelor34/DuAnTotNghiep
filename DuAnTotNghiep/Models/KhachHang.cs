@@ -7,13 +7,12 @@ namespace DuAnTotNghiep.Models
 
     {
         [Key]
-        public string? HoTen {  get; set; }
-        public string? Sdt { get; set;}
-        public string Email { get; set;}
-        public string DiaChi { get; set;}
-        public DateTime NgaySinh { get; set;}
-        public string HoTenAdmin { get; set;}
-        public Admins Admins { get; set;}
-        public virtual ICollection<User_Khachhang> User_Khachhang { get; set;}
+        public string HoTen {  get; set; }
+        public string Sdt { get; set;}
+        public string? Email { get; set;}
+        public string? DiaChi { get; set;}
+        public DateTime? NgaySinh { get; set;}
+        public string? HoTenAdmin { get; set;}
+        public Admins Admins { get; set; }
     }
 }

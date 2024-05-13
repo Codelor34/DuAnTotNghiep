@@ -6,12 +6,9 @@ namespace DuAnTotNghiep.Models
     {
         [Key]
         public Guid ID_User { get; set; }
-        public string? Hoten { get; set; }
-        public string? UserName { get; set; }
+        public string Hoten { get; set; }
+        public string UserName { get; set; }
+        public Users Users { get; set; }
         public KhachHang KhachHang { get; set; }
-        public Users Users { get; set; } 
-   
-
-
     }
 }

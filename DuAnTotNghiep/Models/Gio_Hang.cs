@@ -7,7 +7,6 @@ namespace DuAnTotNghiep.Models
         [Key]
         public Guid ID_Gio_Hang { get; set; }
         public Guid ID_User { get; set; }
-        public User_Khachhang User_Khachhang { get; set; }        
-  
+
     }
 }
