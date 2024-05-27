@@ -24,7 +24,7 @@ namespace DuAnTotNghiep.Controllers
             var p = _context.Users.Where(x => x.UserName.Equals(user.UserName) && x.Password.Equals(user.Password) && x.Role == "Khách Hàng").FirstOrDefault();
             if (u != null && p == null)
             {
-                //HttpContext.Session.SetString("Username", u.UserName.ToString());
+                HttpContext.Session.SetString("Username", u.UserName.ToString());
                 return RedirectToAction("Index", "Home");
             }
             else if (p != null && u == null)
