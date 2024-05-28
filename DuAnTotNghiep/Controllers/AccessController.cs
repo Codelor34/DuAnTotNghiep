@@ -34,33 +34,35 @@ namespace DuAnTotNghiep.Controllers
             }
             return View();
         }
-        public IActionResult Register()
+        public IActionResult SignUp()
         {
             return View();
         }
-        public IActionResult Register(Users User)
+        [HttpPost]
+        
+     
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SignUp([Bind("UserName,Password,Role")] Users users)
         {
-            try
-            {
-                _context.Users.Add(User);
-                //tạo thêm mới giỏ hàng
-                //Gio_Hang Cart = new Gio_Hang()
-                //{
-                //    ID_User = ,
+            
 
-                //};
-                //_context.Gio_Hang.Add(Cart);
-                _context.SaveChanges();
-                TempData["status"] = "Tạo tài khoản thành công";
-                return RedirectToAction("Login");
-               
-
-            }
-            catch (Exception ex)
+            if (ModelState.IsValid)
             {
-                return BadRequest(ex);
+                var SignUp = _context.Users.FirstOrDefault(a=>a.UserName==users.UserName);
+                if (SignUp != null)
+                {
+                    TempData["SuccessMessage"] = "Tài khoản này đã tồn tại";
+                    return View(users);
+                }
+                _context.Add(users);
+
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = null;
+                return RedirectToAction(nameof(Login));
             }
-           
+            return View(users);
         }
+
+
     }
 }
