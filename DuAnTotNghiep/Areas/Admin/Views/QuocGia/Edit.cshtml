@@ -1,0 +1,38 @@
+﻿@model DuAnTotNghiep.Models.QuocGia
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+
+}
+
+<h1>Edit</h1>
+
+<h4>QuocGia</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ID_QuocGia" class="control-label"></label>
+                <input asp-for="ID_QuocGia" class="form-control" />
+                <span asp-validation-for="ID_QuocGia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenNuoc" class="control-label"></label>
+                <input asp-for="TenNuoc" class="form-control" />
+                <span asp-validation-for="TenNuoc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
