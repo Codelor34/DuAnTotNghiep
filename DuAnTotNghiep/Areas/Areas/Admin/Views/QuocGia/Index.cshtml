@@ -1,0 +1,45 @@
+﻿@model IEnumerable<DuAnTotNghiep.Models.QuocGia>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_QuocGia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenNuoc)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID_QuocGia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenNuoc)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID_QuocGia }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID_QuocGia }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.ID_QuocGia  })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
