@@ -7,8 +7,50 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Layout\sass.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\Layout\.DS_Store" />
+    <None Include="wwwroot\Layout\fonts\ElegantIcons.svg" />
+    <None Include="wwwroot\Layout\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\Layout\fonts\fontawesome-webfont.woff2" />
     <None Include="wwwroot\Layout\img\.DS_Store" />
+    <None Include="wwwroot\Layout\js\bootstrap.min.js" />
+    <None Include="wwwroot\Layout\js\jquery-3.3.1.min.js" />
+    <None Include="wwwroot\Layout\js\jquery-ui.min.js" />
+    <None Include="wwwroot\Layout\js\jquery.nice-select.min.js" />
+    <None Include="wwwroot\Layout\js\jquery.slicknav.js" />
+    <None Include="wwwroot\Layout\js\main.js" />
+    <None Include="wwwroot\Layout\js\mixitup.min.js" />
+    <None Include="wwwroot\Layout\js\owl.carousel.min.js" />
+    <None Include="wwwroot\Layout\sass.zip" />
+    <None Include="wwwroot\Layout\sass\style.scss" />
+    <None Include="wwwroot\Layout\sass\_base.scss" />
+    <None Include="wwwroot\Layout\sass\_blog-details.scss" />
+    <None Include="wwwroot\Layout\sass\_blog-sidebar.scss" />
+    <None Include="wwwroot\Layout\sass\_blog.scss" />
+    <None Include="wwwroot\Layout\sass\_breadcrumb.scss" />
+    <None Include="wwwroot\Layout\sass\_checkout.scss" />
+    <None Include="wwwroot\Layout\sass\_contact.scss" />
+    <None Include="wwwroot\Layout\sass\_footer.scss" />
+    <None Include="wwwroot\Layout\sass\_header.scss" />
+    <None Include="wwwroot\Layout\sass\_hero.scss" />
+    <None Include="wwwroot\Layout\sass\_home-page.scss" />
+    <None Include="wwwroot\Layout\sass\_mixins.scss" />
+    <None Include="wwwroot\Layout\sass\_responsive.scss" />
+    <None Include="wwwroot\Layout\sass\_shop-details.scss" />
+    <None Include="wwwroot\Layout\sass\_shop-grid.scss" />
+    <None Include="wwwroot\Layout\sass\_shoping-cart.scss" />
+    <None Include="wwwroot\Layout\sass\_sidebar.scss" />
+    <None Include="wwwroot\Layout\sass\_variable.scss" />
+    <None Include="wwwroot\Layout\Source\bootstrap-4.4.1-dist.zip" />
+    <None Include="wwwroot\Layout\Source\font-awesome-4.7.0.zip" />
+    <None Include="wwwroot\Layout\Source\jquery-nice-select-1.1.0.zip" />
+    <None Include="wwwroot\Layout\Source\jquery-ui-1.12.1.zip" />
+    <None Include="wwwroot\Layout\Source\OwlCarousel2-2.3.4.zip" />
+    <None Include="wwwroot\Layout\Source\sass.zip" />
+    <None Include="wwwroot\Layout\Source\SlickNav-master.zip" />
   </ItemGroup>
 
   <ItemGroup>

@@ -30,7 +30,7 @@ namespace DuAnTotNghiep.Controllers
             else if (p != null && u == null)
             {
                 HttpContext.Session.SetString("Username", p.UserName.ToString());
-                return RedirectToAction("Privacy", "Home");
+                return RedirectToAction("Index", "KhachHang");
             }
             return View();
         }
